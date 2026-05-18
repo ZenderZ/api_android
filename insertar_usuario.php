@@ -2,7 +2,7 @@
 
 $host = "mysql.railway.internal";
 $usuario = "root";
-$contrasena = "KWPSXLGNpCKNMGddCIWIXbIaYsbAqkVS";
+$contrasena = "zSQKsZdyqcdENHdiBMNORYApqMPogRUz";
 $base_datos = "railway";
 $puerto = 3306;
 
