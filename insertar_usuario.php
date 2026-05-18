@@ -1,27 +1,30 @@
 <?php
 
-$host = "mysql.ferrocarril.interno";
-$usuario = "raíz";
-$password = "KWPXLGNpCKNMGddCIWIXbIaYsbAqkVS";
-$database = "ferrocarril";
+$host = "mysql.railway.internal";
+$usuario = "root";
+$contrasena = "KWPSXLGNpCKNMGddCIWIXbIaYsbAqkVS";
+$base_datos = "railway";
+$puerto = 3306;
 
-$conn = new mysqli($host, $usuario, $password, $database);
+$conn = new mysqli($host, $usuario, $contrasena, $base_datos, $puerto);
 
 if ($conn->connect_error) {
-    die("Error de conexión");
+    die("Error de conexión: " . $conn->connect_error);
 }
 
-$nombre = $_POST['nombre'];
-$correo = $_POST['correo'];
-$contrasena = $_POST['contrasena'];
+$data = json_decode(file_get_contents("php://input"), true);
 
-$sql = "INSERT INTO usuarios(nombre, correo, contrasena)
-VALUES('$nombre', '$correo', '$contrasena')";
+$nombre = $data['nombre'];
+$correo = $data['correo'];
+$contrasena_usuario = $data['contrasena'];
+
+$sql = "INSERT INTO usuarios (nombre, correo, contrasena)
+VALUES ('$nombre', '$correo', '$contrasena_usuario')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Usuario registrado";
+    echo "Usuario insertado correctamente";
 } else {
-    echo "Error";
+    echo "Error: " . $conn->error;
 }
 
 $conn->close();
