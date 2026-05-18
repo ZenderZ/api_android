@@ -18,17 +18,28 @@ $nombre = $data['nombre'];
 $correo = $data['correo'];
 $contrasena_usuario = $data['contrasena'];
 
-$sql = "SELECT * FROM usuarios 
+$sql = "SELECT id_usuario, nombre, correo FROM usuarios 
         WHERE nombre = '$nombre' 
         AND correo = '$correo' 
         AND contrasena = '$contrasena_usuario'";
 
 $resultado = $conn->query($sql);
 
+header("Content-Type: application/json");
+
 if ($resultado->num_rows > 0) {
-    echo "Login correcto";
+    $usuario_encontrado = $resultado->fetch_assoc();
+
+    echo json_encode([
+        "estado" => "correcto",
+        "id_usuario" => $usuario_encontrado["id_usuario"],
+        "nombre" => $usuario_encontrado["nombre"],
+        "correo" => $usuario_encontrado["correo"]
+    ]);
 } else {
-    echo "Datos incorrectos";
+    echo json_encode([
+        "estado" => "incorrecto"
+    ]);
 }
 
 $conn->close();
